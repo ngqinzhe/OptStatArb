@@ -1,0 +1,75 @@
+﻿@page "/optionsdata"
+
+@inject IHttpClientFactory _clientFactory
+
+<h3 align="center" style="color: darkgray;">Options Data</h3>
+
+@if (string.IsNullOrWhiteSpace(errorString) == false)
+{
+    <div class="h2">@errorString</div>
+}
+else if (optmodel is null)
+{
+    <div class="h4"> Loading...</div>
+}
+else
+{
+    <div>
+        <table align="center"><tr><td>
+            <table class="table table-striped" style="display: inline-block">
+                <thead>
+                    <tr class="table-primary">
+                        <th>Strike (X)</th>
+                        <th>Call Price (C)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cOpt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().calls)
+                    {
+                        <tr>
+                            <td>@cOpt.strike</td>
+                            <td>@cOpt.lastPrice</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            </td><td>
+            <table class="table table-striped" style="display: inline-block">
+                <thead>
+                    <tr class="table-danger">
+                        <th>Strike (X)</th>
+                        <th>Put Price (P)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pOpt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().puts)
+                    {
+                        <tr>
+                            <td>@pOpt.strike</td>
+                            <td>@pOpt.lastPrice</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </td></tr></table>
+    </div>
+}
+@code {
+    OptionsDataModel optmodel;
+    string errorString;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var client = _clientFactory.CreateClient("options");
+
+        try
+        {
+            optmodel = await client.GetFromJsonAsync<OptionsDataModel>("NFLX");
+            errorString = null;
+        }
+        catch (Exception e)
+        {
+            errorString = $"There was an error: {e.Message}";
+        }
+    }
+}
