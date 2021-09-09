@@ -1,1 +1,1 @@
-<img src="/Images/logo.gif">
+<img src="/wwwroot/images/logo.gif">
