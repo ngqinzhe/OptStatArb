@@ -1,1 +1,1 @@
-<img src="/wwwroot/images/logo.gif">
+<img src="https://github.com/ngqinzhe/OptStatArb/blob/master/OptStatArbApp/wwwroot/images/logo.gif">
