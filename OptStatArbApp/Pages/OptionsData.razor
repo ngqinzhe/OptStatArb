@@ -2,11 +2,10 @@
 
 @inject IHttpClientFactory _clientFactory
 
-<h3 align="center" style="color: darkgray;">Options Data</h3>
-
 <div align="center">
-    <input type="text" @bind-value="@searchTerm" />
-    <input type="button" value="Search" @onclick="@Search" />
+    <input type="text" @bind-value="@searchTerm" placeholder="Enter Ticker Symbol"/>
+    @* <input type="button" value="Search" @onclick="@Search" /> *@
+    <button class="btn btn-outline-primary my-2 my-sm-0" value="Search" @onclick="@Search">Search</button>
 </div>
 
 
