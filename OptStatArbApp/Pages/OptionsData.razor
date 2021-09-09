@@ -2,6 +2,8 @@
 
 @inject IHttpClientFactory _clientFactory
 
+<p>Current count: @currentCount</p>
+
 <h3 align="center" style="color: darkgray;">Options Data</h3>
 
 <div align="center">
@@ -15,7 +17,7 @@
 }
 else if (optmodel is null)
 {
-    <div class="h4"> Loading...</div>
+    <div class="h4" align="center"> Loading...</div>
 }
 else
 {
@@ -32,6 +34,8 @@ else
                 <tbody>
                     @foreach (var cOpt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().calls)
                     {
+                        @* Console.WriteLine(cOpt); *@
+                        IncrementCount();
                         <tr>
                             <td>@cOpt.strike</td>
                             <td>@cOpt.lastPrice</td>
@@ -65,22 +69,34 @@ else
     OptionsDataModel optmodel;
     string errorString;
     string searchTerm;
+    Thread thread;
 
     @* protected override async Task OnInitializedAsync()
         { } *@
+    private int currentCount = 0;
 
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
     protected async Task Search()
     {
         var client = _clientFactory.CreateClient("options");
 
-        try
+        while (true)
         {
-            optmodel = await client.GetFromJsonAsync<OptionsDataModel>(searchTerm);
-            errorString = null;
-        }
-        catch (Exception e)
-        {
-            errorString = $"There was an error: {e.Message}";
+            try
+            {
+                optmodel = await client.GetFromJsonAsync<OptionsDataModel>(searchTerm);
+                errorString = null;
+                InvokeAsync(() => StateHasChanged());
+            }
+            catch (Exception e)
+            {
+                errorString = $"There was an error: {e.Message}";
+            }
+
+            await Task.Delay(1000);
         }
     }
 }
