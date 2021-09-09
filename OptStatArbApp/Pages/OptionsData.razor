@@ -4,6 +4,11 @@
 
 <h3 align="center" style="color: darkgray;">Options Data</h3>
 
+<div align="center">
+    <input type="text" @bind-value="@searchTerm" />
+    <input type="button" value="Search" @onclick="@Search" />
+</div>
+
 @if (string.IsNullOrWhiteSpace(errorString) == false)
 {
     <div class="h2">@errorString</div>
@@ -59,14 +64,18 @@ else
 @code {
     OptionsDataModel optmodel;
     string errorString;
+    string searchTerm;
 
-    protected override async Task OnInitializedAsync()
+    @* protected override async Task OnInitializedAsync()
+        { } *@
+
+    protected async Task Search()
     {
         var client = _clientFactory.CreateClient("options");
 
         try
         {
-            optmodel = await client.GetFromJsonAsync<OptionsDataModel>("NFLX");
+            optmodel = await client.GetFromJsonAsync<OptionsDataModel>(searchTerm);
             errorString = null;
         }
         catch (Exception e)
