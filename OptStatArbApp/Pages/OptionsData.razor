@@ -29,16 +29,21 @@ else
                         <th>Strike Price</th>
                         <th>Market Call Price</th>
                         <th>Statistical Price</th>
+                        <th>Arbitrage</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var cOpt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().calls)
                     {
-                        <tr>
-                            <td>@cOpt.strike</td>
-                            <td>@cOpt.lastPrice</td>
-                            <td>@blackScholes(cOpt, q)</td>
-                        </tr>
+                        if (blackScholes(cOpt, q) > 0.001)
+                        {
+                            <tr>
+                                <td>@cOpt.strike</td>
+                                <td>@cOpt.lastPrice</td>
+                                <td>@blackScholes(cOpt, q).ToString("N3")</td>
+                                <td>@((cOpt.lastPrice - blackScholes(cOpt, q)) > 0.1 * cOpt.lastPrice ? "Yes" : "No")</td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
@@ -48,16 +53,21 @@ else
                         <th>Strike Price</th>
                         <th>Market Put Price</th>
                         <th>Statistical Price</th>
+                        <th>Arbitrage</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var pOpt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().puts)
                     {
-                        <tr>
-                            <td>@pOpt.strike</td>
-                            <td>@pOpt.lastPrice</td>
-                            <td>@blackScholes(pOpt, q)</td>
-                        </tr>
+                        if (blackScholes(pOpt, q) > 0.001)
+                        {
+                            <tr>
+                                <td>@pOpt.strike</td>
+                                <td>@pOpt.lastPrice</td>
+                                <td>@blackScholes(pOpt, q).ToString("N3")</td>
+                                <td>@((pOpt.lastPrice - blackScholes(pOpt, q)) > 0.1 * pOpt.lastPrice ? "Yes" : "No")</td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
@@ -89,7 +99,7 @@ else
                 errorString = $"There was an error: {e.Message}";
             }
 
-            await Task.Delay(100000);
+            await Task.Delay(2000);
         }
     }
 
@@ -113,7 +123,7 @@ else
         return 0.5 * (1.0 + sign * y);
         }
 
-    protected string blackScholes(Call c, Quote q)
+    protected double blackScholes(Call c, Quote q)
     {
         double s = q.regularMarketOpen;
         double k = c.strike;
@@ -129,10 +139,10 @@ else
         double d2 = d1 - v * Math.Sqrt(t);
         double optPrice = (cp * s * normCDF(cp * d1)) - (cp * k * Math.Exp(-rf * t) * normCDF(cp * d2));
 
-        return optPrice.ToString("N3");
+        return optPrice;
     }
 
-    protected string blackScholes(Put p, Quote q)
+    protected double blackScholes(Put p, Quote q)
     {
         double s = q.regularMarketOpen;
         double k = p.strike;
@@ -147,7 +157,7 @@ else
         double d1 = (Math.Log(s / k) + (rf + 0.5 * Math.Pow(v, 2)) * t) / (v * Math.Sqrt(t));
         double d2 = d1 - v * Math.Sqrt(t);
         double optPrice = (cp * s * normCDF(cp * d1)) - (cp * k * Math.Exp(-rf * t) * normCDF(cp * d2));
-        return optPrice.ToString("N3");
+        return optPrice;
     }
 
     protected DateTime UnixTimeToDateTime(double unixtime)
