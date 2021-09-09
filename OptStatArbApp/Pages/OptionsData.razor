@@ -26,8 +26,8 @@ else
             <table class="table table-hover table-dark col-sm m-5">
                 <thead style="border-radius: 10px">
                     <tr style="background-color: darkcyan">
-                        <th>Strike (X)</th>
-                        <th>Call Price (C)</th>
+                        <th>Strike Price</th>
+                        <th>Market Call Price</th>
                         <th>Statistical Price</th>
                     </tr>
                 </thead>
@@ -45,8 +45,8 @@ else
             <table class="table table-hover table-dark col-sm m-5">
                 <thead>
                     <tr style="background-color: darkred">
-                        <th>Strike (X)</th>
-                        <th>Put Price (P)</th>
+                        <th>Strike Price</th>
+                        <th>Market Put Price</th>
                         <th>Statistical Price</th>
                     </tr>
                 </thead>
@@ -141,7 +141,7 @@ else
         TimeSpan timeSpan = dateTime - timeNow;
         double t = timeSpan.TotalDays / 365;
         double v = p.impliedVolatility;
-        int cp = -11;
+        int cp = -1;
 
         double rf = 0.0135;
         double d1 = (Math.Log(s / k) + (rf + 0.5 * Math.Pow(v, 2)) * t) / (v * Math.Sqrt(t));
