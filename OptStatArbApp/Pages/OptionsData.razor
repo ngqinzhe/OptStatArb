@@ -39,11 +39,12 @@ else
     var q = optmodel.optionChain.result.FirstOrDefault().quote;
     <div class="content">
         <div class="fv-container">
-            <table width="50%" cellpadding="3" cellspacing="0" border="0" class="snapshot-table2 table-striped" style="float: left">
+            <table width="49%" cellpadding="3" cellspacing="0" border="0" class="snapshot-table2 table-striped " style="float: left">
                 <tbody>
                     <tr>
                         <td width="7%" class="snapshot-td2-cp bg-success" align="left">Strike Price(C)</td>
-                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Market Call Price</td>
+                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Bid</td>
+                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Ask</td>
                         <td width="7%" class="snapshot-td2-cp bg-success" align="left">Statistical Price(C)</td>
                         <td width="7%" class="snapshot-td2-cp bg-success" align="left">Arbitrage</td>
                     </tr>
@@ -53,7 +54,8 @@ else
                         {
                             <tr class="table-dark-row">
                                 <td width="7%" class="snapshot-td2-cp" align="left">@cOpt.strike</td>
-                                <td width="7%" class="snapshot-td2-cp" align="left">@cOpt.lastPrice.ToString("N2")</td>
+                                <td width="7%" class="snapshot-td2-cp" align="left">@cOpt.bid.ToString("N2")</td>
+                                <td width="7%" class="snapshot-td2-cp" align="left">@cOpt.ask.ToString("N2")</td>
                                 <td width="7%" class="snapshot-td2-cp" align="left">@blackScholes(cOpt, q).ToString("N2")</td>
                                 <td width="7%" class="snapshot-td2-cp" align="left">@((cOpt.lastPrice - blackScholes(cOpt, q)) > 0.1 * cOpt.lastPrice ? "Yes" : "No")</td>
                             </tr>
@@ -61,11 +63,12 @@ else
                     }
                 </tbody>
             </table>
-            <table width="50%" cellpadding="3" cellspacing="0" border="0" class="snapshot-table2 table-striped" style="float: left">
+            <table width="49%" cellpadding="3" cellspacing="0" border="0" class="snapshot-table2 table-striped" style="float: right">
                 <tbody>
                     <tr>
                         <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Strike Price(P)</td>
-                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Market Put Price</td>
+                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Bid</td>
+                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Ask</td>
                         <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Statistical Price(P)</td>
                         <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Arbitrage</td>
                     </tr>
@@ -75,7 +78,8 @@ else
                         {
                             <tr class="table-dark-row">
                                 <td width="7%" class="snapshot-td2-cp" align="left">@pOpt.strike</td>
-                                <td width="7%" class="snapshot-td2-cp" align="left">@pOpt.lastPrice.ToString("N2")</td>
+                                <td width="7%" class="snapshot-td2-cp" align="left">@pOpt.bid.ToString("N2")</td>
+                                <td width="7%" class="snapshot-td2-cp" align="left">@pOpt.ask.ToString("N2")</td>
                                 <td width="7%" class="snapshot-td2-cp" align="left">@blackScholes(pOpt, q).ToString("N2")</td>
                                 <td width="7%" class="snapshot-td2-cp" align="left">@((pOpt.lastPrice - blackScholes(pOpt, q)) > 0.1 * pOpt.lastPrice ? "Yes" : "No")</td>
                             </tr>
