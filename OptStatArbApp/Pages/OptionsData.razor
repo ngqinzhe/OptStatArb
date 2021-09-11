@@ -37,51 +37,36 @@ else if (optmodel is null)
 else
 {
     var q = optmodel.optionChain.result.FirstOrDefault().quote;
-    <div class="container text-center">
-        <div class="row">
-            <table class="table snapshot-table2" width="50%">
-                <thead style="border-radius: 10px">
-                    <tr style="background-color: darkcyan">
-                        <th>Strike Price</th>
-                        <th>Market Call Price</th>
-                        <th>Statistical Price</th>
-                        <th>Arbitrage</th>
-                    </tr>
-                </thead>
+    <div class="content">
+        <div class="fv-container">
+            <table width="100%" cellpadding="3" cellspacing="0" border="0" class="snapshot-table2">
                 <tbody>
-                    @foreach (var cOpt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().calls)
+                    <tr>
+                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Strike Price(C)</td>
+                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Market Call Price</td>
+                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Statistical Price(C)</td>
+                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Arbitrage</td>
+                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Strike Price(P)</td>
+                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Market Put Price</td>
+                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Statistical Price(P)</td>
+                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Arbitrage</td>
+                    </tr>
+                    @foreach (var opt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().calls.Zip(
+                        optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().puts, (c, p) => new {C = c, P = p}))
                     {
+                        var cOpt = opt.C;
+                        var pOpt = opt.P;
                         if (blackScholes(cOpt, q) > 0.001)
                         {
-                            <tr>
-                                <td>@cOpt.strike</td>
-                                <td>@cOpt.lastPrice.ToString("N2")</td>
-                                <td>@blackScholes(cOpt, q).ToString("N2")</td>
-                                <td>@((cOpt.lastPrice - blackScholes(cOpt, q)) > 0.1 * cOpt.lastPrice ? "Yes" : "No")</td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-            <table class="table snapshot-table2 col-sm" width="50%">
-                <thead>
-                    <tr style="background-color: darkred">
-                        <th>Strike Price</th>
-                        <th>Market Put Price</th>
-                        <th>Statistical Price</th>
-                        <th>Arbitrage</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var pOpt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().puts)
-                    {
-                        if (blackScholes(pOpt, q) > 0.001)
-                        {
-                            <tr>
-                                <td>@pOpt.strike</td>
-                                <td>@pOpt.lastPrice.ToString("N2")</td>
-                                <td>@blackScholes(pOpt, q).ToString("N2")</td>
-                                <td>@((pOpt.lastPrice - blackScholes(pOpt, q)) > 0.1 * pOpt.lastPrice ? "Yes" : "No")</td>
+                            <tr class="table-dark-row">
+                                <td width="7%" class="snapshot-td2-cp" align="left">@cOpt.strike</td>
+                                <td width="7%" class="snapshot-td2-cp" align="left">@cOpt.lastPrice.ToString("N2")</td>
+                                <td width="7%" class="snapshot-td2-cp" align="left">@blackScholes(cOpt, q).ToString("N2")</td>
+                                <td width="7%" class="snapshot-td2-cp" align="left">@((cOpt.lastPrice - blackScholes(cOpt, q)) > 0.1 * cOpt.lastPrice ? "Yes" : "No")</td>
+                                <td width="7%" class="snapshot-td2-cp" align="left">@pOpt.strike</td>
+                                <td width="7%" class="snapshot-td2-cp" align="left">@pOpt.lastPrice.ToString("N2")</td>
+                                <td width="7%" class="snapshot-td2-cp" align="left">@blackScholes(pOpt, q).ToString("N2")</td>
+                                <td width="7%" class="snapshot-td2-cp" align="left">@((pOpt.lastPrice - blackScholes(pOpt, q)) > 0.1 * pOpt.lastPrice ? "Yes" : "No")</td>
                             </tr>
                         }
                     }
