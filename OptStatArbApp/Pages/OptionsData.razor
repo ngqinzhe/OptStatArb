@@ -42,11 +42,11 @@ else
             <table width="49%" cellpadding="3" cellspacing="0" border="0" class="snapshot-table2 table-striped " style="float: left">
                 <tbody>
                     <tr>
-                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Strike Price(C)</td>
-                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Bid</td>
-                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Ask</td>
-                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Statistical Price(C)</td>
-                        <td width="7%" class="snapshot-td2-cp bg-success" align="left">Arbitrage</td>
+                        <td width="7%" class="snapshot-td2-cp bg-success" align="left"><strong>Strike Price(C)</strong></td>
+                        <td width="7%" class="snapshot-td2-cp bg-success" align="left"><strong>Bid</strong></td>
+                        <td width="7%" class="snapshot-td2-cp bg-success" align="left"><strong>Ask</strong></td>
+                        <td width="7%" class="snapshot-td2-cp bg-success" align="left"><strong>Statistical Price(C)</strong></td>
+                        <td width="7%" class="snapshot-td2-cp bg-success" align="left"><strong>Arbitrage</strong></td>
                     </tr>
                     @foreach (var cOpt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().calls)
                     {
@@ -66,11 +66,11 @@ else
             <table width="49%" cellpadding="3" cellspacing="0" border="0" class="snapshot-table2 table-striped" style="float: right">
                 <tbody>
                     <tr>
-                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Strike Price(P)</td>
-                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Bid</td>
-                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Ask</td>
-                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Statistical Price(P)</td>
-                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left">Arbitrage</td>
+                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left"><strong>Strike Price(P)</strong></td>
+                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left"><strong>Bid</strong></td>
+                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left"><strong>Ask</strong></td>
+                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left"><strong>Statistical Price(P)</strong></td>
+                        <td width="7%" class="snapshot-td2-cp bg-danger" align="left"><strong>Arbitrage</strong></td>
                     </tr>
                     @foreach (var pOpt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().puts)
                     {
