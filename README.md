@@ -45,7 +45,7 @@ Objectives for this project:
 * Provide users the ability to fetch option data for every ticker available in the market
 * Show users that there are statistical arbitrage opportunities available in the market
 
-This is by no means any form of financial advice. To determine whether there is a possibility of statiscal arbitrage, if the difference between the statistical pricing and option market price is more than 10% of the option market price, then there is a possiblity of arbitrage. This gap is to factor out possbilities in accuracy of calculations and commisions from the purchase of options.
+To determine whether there is a possibility of statiscal arbitrage, I used the difference between the statistical pricing and option market price is more than 10% of the option market price, then there is a possiblity of arbitrage. This gap is to factor out possbilities in accuracy of calculations and commisions from the purchase of options.
 
 ### Built With
 
