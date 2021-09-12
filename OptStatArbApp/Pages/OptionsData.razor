@@ -50,7 +50,7 @@ else
                     </tr>
                     @foreach (var cOpt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().calls)
                     {
-                        if (blackScholes(cOpt, q) > 0.001)
+                        if (blackScholes(cOpt, q) > 0.01)
                         {
                             <tr class="table-dark-row">
                                 <td width="7%" class="snapshot-td2-cp" align="left">@cOpt.strike</td>
@@ -74,7 +74,7 @@ else
                     </tr>
                     @foreach (var pOpt in optmodel.optionChain.result.FirstOrDefault().options.FirstOrDefault().puts)
                     {
-                        if (blackScholes(pOpt, q) > 0.001)
+                        if (blackScholes(pOpt, q) > 0.01)
                         {
                             <tr class="table-dark-row">
                                 <td width="7%" class="snapshot-td2-cp" align="left">@pOpt.strike</td>
