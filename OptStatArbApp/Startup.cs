@@ -28,7 +28,6 @@ namespace OptStatArbApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddHttpClient();
             services.AddHttpClient("options", c =>
             {
